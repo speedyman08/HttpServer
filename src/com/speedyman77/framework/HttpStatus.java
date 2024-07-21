@@ -1,10 +1,17 @@
 package com.speedyman77.framework;
 
 public enum HttpStatus {
-    Ok(200),
+    OK(200),
     NotFound(404),
     InternalServerError(500);
 
-    HttpStatus(int i) {
+    private final int code;
+
+    HttpStatus(int statusCode) {
+        this.code = statusCode;
+    }
+
+    public int getStatusCode() {
+        return this.code;
     }
 }

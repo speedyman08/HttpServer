@@ -25,7 +25,11 @@ public class Server {
     }
 
     public void init() {
+        listenForConnections();
+        latch.countDown();
+    }
 
+    public void listenForConnections() {
         Thread t = new Thread (() -> {
             while(serverSocket.isBound()) {
                 System.out.println("Waiting for connection..");
@@ -38,8 +42,6 @@ public class Server {
             }
         });
         t.start();
-
-        latch.countDown();
     }
 
     public void awaitUntilReady() throws InterruptedException {
@@ -52,7 +54,11 @@ public class Server {
 
     public void handleConnection(Socket client) throws IOException {
         OutputStream out = client.getOutputStream();
-        out.write("HTTP/1.1 200 OK\n\nHello, World".getBytes());
+        Response res = Response.getBuilder(HttpStatus.OK, "text/plain")
+                .addContent("Hello World")
+                .build();
+
+        out.write(res.asBytes());
 
         System.out.println("Sent response..");
 
