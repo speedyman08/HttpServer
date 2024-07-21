@@ -32,8 +32,6 @@ public class Client extends Assert {
             fail("Failed to connect to localhost");
         }
 
-        server.close();
-
         assertEquals(res.body(), "Hello World");
     }
 }

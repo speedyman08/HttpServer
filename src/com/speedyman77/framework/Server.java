@@ -32,7 +32,6 @@ public class Server {
     public void listenForConnections() {
         Thread t = new Thread (() -> {
             while(serverSocket.isBound()) {
-                System.out.println("Waiting for connection..");
                 try {
                     handleConnection(serverSocket.accept());
                 } catch (IOException e) {
